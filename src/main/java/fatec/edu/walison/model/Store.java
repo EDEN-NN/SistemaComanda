@@ -1,5 +1,11 @@
 package fatec.edu.walison.model;
 
-public class Store {
+import java.io.Serializable;
 
+public class Store extends UserApp implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	
+	
 }

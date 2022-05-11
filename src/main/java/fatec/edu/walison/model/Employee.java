@@ -1,5 +1,10 @@
 package fatec.edu.walison.model;
 
-public class Employee {
+import java.io.Serializable;
 
+public class Employee extends UserApp implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+	
 }

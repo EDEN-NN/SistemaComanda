@@ -8,6 +8,7 @@ public abstract class UserApp {
 	private String userName;
 	private String role;
 	private String password;
+	
 	public Long getUserId() {
 		return userId;
 	}
