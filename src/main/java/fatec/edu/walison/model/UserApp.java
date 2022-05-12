@@ -1,7 +1,10 @@
 package fatec.edu.walison.model;
 
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.MappedSuperclass;
 
+@Entity
+@MappedSuperclass
 public abstract class UserApp {
 	
 	private Long userId;

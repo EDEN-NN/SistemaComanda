@@ -1,9 +1,8 @@
 package fatec.edu.walison.model;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.List;
-
-import org.hibernate.annotations.Entity;
 
 @Entity
 public class Order implements Serializable {
