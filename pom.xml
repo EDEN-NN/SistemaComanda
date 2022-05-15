@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>SistemaComandas</name>
-	<description>Desenvolvimento de uma API com fins estudantis.</description>
+	<description>Desenvolvimento de uma API para fins estudantis.</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -47,7 +47,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

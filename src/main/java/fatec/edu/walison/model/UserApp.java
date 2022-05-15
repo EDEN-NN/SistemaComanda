@@ -1,15 +1,18 @@
 package fatec.edu.walison.model;
 
-import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
+import javax.annotation.Nullable;
+import javax.persistence.*;
 
-@Entity
 @MappedSuperclass
 public abstract class UserApp {
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
+
 	private String userName;
+	@Nullable
 	private String role;
+
 	private String password;
 	
 	public Long getUserId() {
