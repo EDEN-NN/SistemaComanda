@@ -1,14 +1,11 @@
 package fatec.edu.walison.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
-@Table
 public class Client extends UserApp implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -19,13 +16,14 @@ public class Client extends UserApp implements Serializable{
 
 	private String cpf;
 	@OneToOne
-	private Order order;
+	private Orders orders;
 
-	public Client(String email, String birthDate, String cpf, Order order) {
+	public Client(String userName, String password, String email, String birthDate, String cpf) {
+		this.setUserName(userName);
+		this.setPassword(password);
 		this.email = email;
 		this.birthDate = birthDate;
 		this.cpf = cpf;
-		this.order = order;
 	}
 
 	public Client() {}
@@ -54,11 +52,11 @@ public class Client extends UserApp implements Serializable{
 		this.cpf = cpf;
 	}
 
-	public Order getOrder() {
-		return order;
+	public Orders getOrder() {
+		return orders;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setOrder(Orders orders) {
+		this.orders = orders;
 	}
 }

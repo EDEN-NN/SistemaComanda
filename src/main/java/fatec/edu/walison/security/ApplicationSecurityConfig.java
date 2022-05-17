@@ -15,9 +15,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
-	
+
 	private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -26,43 +25,20 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
                 .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*")
+                .antMatchers("/")
                 .permitAll()
-                .anyRequest()
-                .authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login").permitAll()
-                .and()
-                .rememberMe();
+                .authorizeRequests()
+                .antMatchers("/console/**")
+                .permitAll();
+        httpSecurity
+                .csrf().disable();
+        httpSecurity
+                .headers()
+                .frameOptions().disable();
     }
 
-    @Override
-    @Bean
-    protected UserDetailsService userDetailsService() {
-        UserDetails smith = User.builder()
-                .username("Smith")
-                .password(passwordEncoder.encode("password"))
-                .authorities(ApplicationUserRole.CLIENT.getGrantedAuthorities())
-                //     .roles(ApplicationUserRole.STUDENT.name())
-                .build();
-
-        UserDetails linda = User.builder()
-                .username("linda")
-                .password(passwordEncoder.encode("password123"))
-                .authorities(ApplicationUserRole.ADMIN.getGrantedAuthorities())
-                //    .roles(ApplicationUserRole.ADMIN.name())
-                .build();
-
-
-        return new InMemoryUserDetailsManager(
-                smith,
-                linda
-                );
-
-    }
 }

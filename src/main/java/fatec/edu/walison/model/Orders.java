@@ -2,12 +2,11 @@ package fatec.edu.walison.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table
-public class Order implements Serializable {
+public class Orders implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -15,22 +14,21 @@ public class Order implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderId;
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private Client client;
   	@ManyToOne
-	@JoinColumn(name = "employee.userId")
+	@JoinColumn(name = "employee_id")
 	private Employee employee;
-	@ManyToOne
-	private Product product;
+	@OneToMany(mappedBy = "orders", fetch = FetchType.EAGER)
+	private final Set<Product> products = new HashSet<>();
 
-	public Order(Long orderId, Client client, Employee employee, Product product) {
+	public Orders(Long orderId, Client client, Employee employee) {
 		this.orderId = orderId;
 		this.client = client;
 		this.employee = employee;
-		this.product = product;
 	}
 
-	public Order() {}
+	public Orders() {}
 
 	public Long getOrderId() {
 		return orderId;
@@ -56,11 +54,8 @@ public class Order implements Serializable {
 		this.employee = employee;
 	}
 
-	public Product getProduct() {
-		return product;
+	public Set<Product> getProducts() {
+		return products;
 	}
 
-	public void setProduct(Product product) {
-		this.product = product;
-	}
 }

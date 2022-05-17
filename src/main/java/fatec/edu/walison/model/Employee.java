@@ -4,11 +4,9 @@ import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table
 public class Employee extends UserApp implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -18,8 +16,9 @@ public class Employee extends UserApp implements Serializable {
 	@Nullable
 	private String firedDate;
 	@OneToMany(mappedBy = "employee")
-	private Set<Order> orders = new HashSet<>();
-	@JoinColumn(name = "store.userId")
+	private final Set<Orders> orders = new HashSet<>();
+	@ManyToOne
+	@JoinColumn(name = "store_id")
 	private Store store;
 
 	public Employee(String cpf, String hiredDate, String firedDate, Store store) {
@@ -63,7 +62,7 @@ public class Employee extends UserApp implements Serializable {
 		this.store = store;
 	}
 
-	public Set<Order> getOrders() {
+	public Set<Orders> getOrders() {
 		return orders;
 	}
 
