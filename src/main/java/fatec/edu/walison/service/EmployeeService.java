@@ -3,10 +3,12 @@ package fatec.edu.walison.service;
 import fatec.edu.walison.model.Employee;
 import fatec.edu.walison.repository.IEmployee;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@Service
 public class EmployeeService {
 
     @Autowired

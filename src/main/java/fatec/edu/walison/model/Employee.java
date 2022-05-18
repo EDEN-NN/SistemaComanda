@@ -21,7 +21,9 @@ public class Employee extends UserApp implements Serializable {
 	@JoinColumn(name = "store_id")
 	private Store store;
 
-	public Employee(String cpf, String hiredDate, String firedDate, Store store) {
+	public Employee(String userName, String password, String cpf, String hiredDate, String firedDate, Store store) {
+		this.setUserName(userName);
+		this.setPassword(password);
 		this.cpf = cpf;
 		this.hiredDate = hiredDate;
 		this.firedDate = firedDate;

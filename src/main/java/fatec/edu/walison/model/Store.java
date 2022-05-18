@@ -22,7 +22,7 @@ public class Store extends UserApp implements Serializable {
 	@OneToMany(mappedBy = "store")
 	private Set<Employee> employees = new HashSet<>();
 
-	public Store(String cnpj, String address, String category) {
+	public Store(String userName, String password, String cnpj, String address, String category) {
 		this.cnpj = cnpj;
 		this.address = address;
 		this.category = category;
