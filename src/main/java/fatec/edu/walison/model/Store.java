@@ -1,31 +1,39 @@
 package fatec.edu.walison.model;
 
+import org.checkerframework.checker.units.qual.C;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Store extends UserApp implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Column(nullable = false, unique = true, name = "cnpj")
 	private String cnpj;
+	@Column(nullable = false, name = "address")
 	private String address;
+	@Column(name = "category")
 	private String category;
 	@OneToMany(mappedBy = "store")
 	private Set<Product> products = new HashSet<>();
 	@OneToMany(mappedBy = "store")
 	private Set<Employee> employees = new HashSet<>();
 
-	public Store(String userName, String password, String cnpj, String address, String category) {
+	public Store(String userName, String password, String cnpj, String email, String phone, String address, String category) {
+		this.setUserName(userName);
+		this.setPassword(password);
+		this.setEmail(email);
+		this.setPhone(phone);
 		this.cnpj = cnpj;
 		this.address = address;
 		this.category = category;
+		this.getRole().addAll(Arrays.asList(Role.CLIENT, Role.EMPLOYEE, Role.ADMIN));
 	}
 
 	public Store() {}

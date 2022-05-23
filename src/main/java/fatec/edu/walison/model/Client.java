@@ -1,5 +1,6 @@
 package fatec.edu.walison.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -10,32 +11,27 @@ public class Client extends UserApp implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
-	private String email;
-
+	@Column(name = "birthdate")
 	private String birthDate;
 
+	@Column(nullable = false, unique = true, name = "cpf")
 	private String cpf;
+
 	@OneToOne
 	private Orders orders;
 
-	public Client(String userName, String password, String email, String birthDate, String cpf) {
+	public Client(String userName, String password, String email, String phone, String birthDate, String cpf) {
 		this.setUserName(userName);
 		this.setPassword(password);
-		this.email = email;
+		this.setEmail(email);
+		this.setPhone(phone);
 		this.birthDate = birthDate;
 		this.cpf = cpf;
+		this.getRole().add(Role.CLIENT);
 	}
 
 	public Client() {}
 
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	public String getBirthDate() {
 		return birthDate;
 	}

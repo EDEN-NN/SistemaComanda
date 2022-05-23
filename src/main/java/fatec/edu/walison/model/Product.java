@@ -10,7 +10,9 @@ public class Product implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long productId;
+	@Column(nullable = false, name = "name")
 	private String name;
+	@Column(nullable = false, name = "price")
 	private Double price;
 	@ManyToOne
 	@JoinColumn(name = "orders_id")
@@ -20,6 +22,7 @@ public class Product implements Serializable{
 	@JoinColumn(name = "store_id")
 	private Store store;
 
+	@Column(nullable = false, name = "quantity")
 	private Integer quantity;
 
 	public Product(Long productId, String name, Double price, Orders orders, Store store, Integer quantity) {
