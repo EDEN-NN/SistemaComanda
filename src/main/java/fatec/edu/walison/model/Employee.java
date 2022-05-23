@@ -18,8 +18,8 @@ public class Employee extends UserApp implements Serializable {
 	private String hiredDate;
 	@Column(nullable = true, name = "firedDate")
 	private String firedDate;
-	@OneToMany(mappedBy = "employee")
-	private final Set<Orders> orders = new HashSet<>();
+	@OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
+	private Set<Orders> orders = new HashSet<>();
 	@ManyToOne
 	@JoinColumn(name = "store_id")
 	private Store store;
@@ -33,7 +33,7 @@ public class Employee extends UserApp implements Serializable {
 		this.hiredDate = hiredDate;
 		this.firedDate = firedDate;
 		this.store = store;
-		this.getRole().addAll(Arrays.asList(Role.CLIENT, Role.EMPLOYEE));
+//		this.getRole().addAll(Arrays.asList(Role.CLIENT, Role.EMPLOYEE));
 	}
 
 	public Employee() {}

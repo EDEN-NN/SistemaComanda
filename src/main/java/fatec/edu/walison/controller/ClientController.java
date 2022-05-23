@@ -39,13 +39,6 @@ public class ClientController {
         return ResponseEntity.accepted().body(newClient);
     }
 
-    @PostMapping("/client/create")
-    public ResponseEntity<Client> createClient(@RequestBody Client client) {
-        client = service.saveClient(client);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(client.getUserId()).toUri();
-        return ResponseEntity.created(uri).body(client);
-    }
 
     @DeleteMapping("/client/delete/{id}")
     public ResponseEntity<Void> deleteClient(@PathVariable Long id) {

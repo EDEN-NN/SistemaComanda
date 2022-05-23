@@ -33,7 +33,7 @@ public class Store extends UserApp implements Serializable {
 		this.cnpj = cnpj;
 		this.address = address;
 		this.category = category;
-		this.getRole().addAll(Arrays.asList(Role.CLIENT, Role.EMPLOYEE, Role.ADMIN));
+//		this.getRole().addAll(Arrays.asList(Role.CLIENT, Role.EMPLOYEE, Role.ADMIN));
 	}
 
 	public Store() {}

@@ -27,7 +27,7 @@ public class Client extends UserApp implements Serializable{
 		this.setPhone(phone);
 		this.birthDate = birthDate;
 		this.cpf = cpf;
-		this.getRole().add(Role.CLIENT);
+//		this.getRole().add(Role.CLIENT);
 	}
 
 	public Client() {}

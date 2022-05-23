@@ -32,9 +32,9 @@ public class StoreController {
 
     @PutMapping("/store/{id}")
     public ResponseEntity<Store> updateStore(@PathVariable Long id, @RequestBody Store store) {
-        Store newStore = service.findById(id);
-        service.saveStore(newStore);
-        return ResponseEntity.accepted().body(newStore);
+        store = service.findById(id);
+        service.saveStore(store);
+        return ResponseEntity.accepted().body(store);
     }
 
     @PostMapping("/store/create")
