@@ -2,16 +2,18 @@ package fatec.edu.walison.model;
 
 import org.checkerframework.common.reflection.qual.GetMethod;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
+
 @MappedSuperclass
 public abstract class UserApp implements UserDetails {
 
@@ -31,7 +33,10 @@ public abstract class UserApp implements UserDetails {
 	@Column(nullable = false, unique = true, name = "username")
 	private String userName;
 
-	@Nonnull
+	@ManyToMany
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(
+			name = "user_id", referencedColumnName = "userId"
+	))
 	private Set<Role> role = new HashSet<>();
 
 	@Column(nullable = false, name = "password")
@@ -40,7 +45,7 @@ public abstract class UserApp implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return this.role;
 	}
 
 	@Override

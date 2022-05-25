@@ -1,16 +1,38 @@
 package fatec.edu.walison.model;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Entity;
-import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
-public class Role implements Serializable {
+@Table(name = "role")
+public class Role implements GrantedAuthority {
 
-    private static final String client = "CLIENT";
-    private static final String employee = "EMPLOYEE";
-    private static final String store = "STORE";
+    @Id
+    @Column(name = "nameRole")
+    private String nameRole;
 
+    @ManyToMany
+    private List<UserApp> user;
 
+    public Role(String nameRole) {
+        this.nameRole = nameRole;
+    }
+
+    public Role() {
+    }
+
+    @Override
+    public String getAuthority() {
+        return this.nameRole;
+    }
+
+    public String getNameRole() {
+        return nameRole;
+    }
+
+    public void setNameRole(String nameRole) {
+        this.nameRole = nameRole;
+    }
 }
