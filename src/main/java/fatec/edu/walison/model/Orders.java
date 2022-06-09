@@ -1,5 +1,6 @@
 package fatec.edu.walison.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,13 +18,16 @@ public class Orders implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long orderId;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
+	@OneToOne
 	private Client client;
-  	@ManyToOne
+	@JsonIgnore
+	@ManyToOne
 	@JoinColumn(name = "employee_id")
 	private Employee employee;
-	@OneToMany(mappedBy = "orders", fetch = FetchType.EAGER)
-	private final Set<Product> products = new HashSet<>();
+	@JsonIgnore
+	@OneToMany(mappedBy = "orders", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	private Set<Product> products = new HashSet<>();
 
 	public Orders(Long orderId, Client client, Employee employee) {
 		this.orderId = orderId;

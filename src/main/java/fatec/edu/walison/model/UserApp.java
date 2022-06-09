@@ -1,5 +1,6 @@
 package fatec.edu.walison.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.checkerframework.common.reflection.qual.GetMethod;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,10 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.persistence.*;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @MappedSuperclass
@@ -31,13 +29,15 @@ public abstract class UserApp implements UserDetails {
 	private String phone;
 
 	@Column(nullable = false, unique = true, name = "username")
-	private String userName;
+	private String username;
 
-	@ManyToMany
+//	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.MERGE)
+	@Transient
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(
 			name = "user_id", referencedColumnName = "userId"
-	))
-	private Set<Role> role = new HashSet<>();
+	) )
+	private List<Role> roles = new ArrayList<>();
 
 	@Column(nullable = false, name = "password")
 	private String password;
@@ -45,12 +45,11 @@ public abstract class UserApp implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.role;
-	}
 
-	@Override
-	public String getUsername() {
-		return this.userName;
+		Collection<SimpleGrantedAuthority> collection = new ArrayList<>();
+		roles.forEach(role -> collection.add(new SimpleGrantedAuthority(role.getNameRole())));
+
+		return collection;
 	}
 
 	@Override
@@ -79,14 +78,14 @@ public abstract class UserApp implements UserDetails {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	public Set<Role> getRole() {
-		return role;
+	public List<Role> getRole() {
+		return roles;
 	}
 	public String getPassword() {
 		return password;
@@ -114,7 +113,7 @@ public abstract class UserApp implements UserDetails {
 
 	@Override
 	public String toString() {
-		return "UserApp [userId=" + userId + ", userName=" + userName + ", role=" + role + ", password=" + password
+		return "UserApp [userId=" + userId + ", username=" + username + ", role=" + roles + ", password=" + password
 				+ "]";
 	}
 	

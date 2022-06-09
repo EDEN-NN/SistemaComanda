@@ -1,11 +1,9 @@
 package fatec.edu.walison.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.checkerframework.checker.units.qual.C;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
@@ -20,20 +18,25 @@ public class Store extends UserApp implements Serializable {
 	private String address;
 	@Column(name = "category")
 	private String category;
-	@OneToMany(mappedBy = "store")
+	@JsonIgnore
+	@OneToMany(mappedBy = "store", cascade = CascadeType.MERGE)
 	private Set<Product> products = new HashSet<>();
-	@OneToMany(mappedBy = "store")
+	@JsonIgnore
+	@OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
 	private Set<Employee> employees = new HashSet<>();
 
-	public Store(String userName, String password, String cnpj, String email, String phone, String address, String category) {
-		this.setUserName(userName);
+	public Store(String username, String password, String cnpj, String email, String phone, String address, String category) {
+		this.setUsername(username);
 		this.setPassword(password);
 		this.setEmail(email);
 		this.setPhone(phone);
 		this.cnpj = cnpj;
 		this.address = address;
 		this.category = category;
-//		this.getRole().addAll(Arrays.asList(Role.CLIENT, Role.EMPLOYEE, Role.ADMIN));
+		this.getRole().
+				addAll(Arrays.asList(new Role(null, "CLIENT_ROLE"),
+						new Role(null, "EMPLOYEE_ROLE"),
+						new Role(null, "ADMIN_ROLE")));
 	}
 
 	public Store() {}

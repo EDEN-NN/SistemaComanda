@@ -3,30 +3,26 @@ package fatec.edu.walison.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "role")
-public class Role implements GrantedAuthority {
+public class Role implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idRole;
     @Column(name = "nameRole")
     private String nameRole;
 
-    @ManyToMany
-    private List<UserApp> user;
 
-    public Role(String nameRole) {
+    public Role(Long idRole, String nameRole) {
         this.nameRole = nameRole;
     }
 
     public Role() {
     }
 
-    @Override
-    public String getAuthority() {
-        return this.nameRole;
-    }
 
     public String getNameRole() {
         return nameRole;

@@ -1,5 +1,8 @@
 package fatec.edu.walison.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -14,10 +17,12 @@ public class Product implements Serializable{
 	private String name;
 	@Column(nullable = false, name = "price")
 	private Double price;
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "orders_id")
 	private Orders orders;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "store_id")
 	private Store store;
@@ -25,12 +30,10 @@ public class Product implements Serializable{
 	@Column(nullable = false, name = "quantity")
 	private Integer quantity;
 
-	public Product(Long productId, String name, Double price, Orders orders, Store store, Integer quantity) {
+	public Product(Long productId, String name, Double price, Integer quantity) {
 		this.productId = productId;
 		this.name = name;
 		this.price = price;
-		this.orders = orders;
-		this.store = store;
 		this.quantity = quantity;
 	}
 

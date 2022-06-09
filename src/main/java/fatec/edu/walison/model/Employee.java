@@ -1,5 +1,7 @@
 package fatec.edu.walison.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.annotation.Nullable;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,14 +20,17 @@ public class Employee extends UserApp implements Serializable {
 	private String hiredDate;
 	@Column(nullable = true, name = "firedDate")
 	private String firedDate;
-	@OneToMany(mappedBy = "employee", fetch = FetchType.EAGER)
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "employee", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Orders> orders = new HashSet<>();
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "store_id")
 	private Store store;
 
-	public Employee(String userName, String password, String cpf, String email, String phone, String hiredDate, String firedDate, Store store) {
-		this.setUserName(userName);
+	public Employee(String username, String password, String cpf, String email, String phone, String hiredDate, String firedDate, Store store) {
+		this.setUsername(username);
 		this.setPassword(password);
 		this.cpf = cpf;
 		this.setEmail(email);
@@ -33,7 +38,9 @@ public class Employee extends UserApp implements Serializable {
 		this.hiredDate = hiredDate;
 		this.firedDate = firedDate;
 		this.store = store;
-//		this.getRole().addAll(Arrays.asList(Role.CLIENT, Role.EMPLOYEE));
+		this.getRole().
+				addAll(Arrays.asList(new Role(null, "CLIENT_ROLE"),
+						new Role(null, "EMPLOYEE_ROLE")));
 	}
 
 	public Employee() {}

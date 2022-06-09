@@ -1,5 +1,8 @@
 package fatec.edu.walison.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -7,6 +10,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
+@Transactional
 public class Client extends UserApp implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -17,17 +21,17 @@ public class Client extends UserApp implements Serializable{
 	@Column(nullable = false, unique = true, name = "cpf")
 	private String cpf;
 
+	@JsonIgnore
 	@OneToOne
 	private Orders orders;
 
-	public Client(String userName, String password, String email, String phone, String birthDate, String cpf) {
-		this.setUserName(userName);
+	public Client(String username, String password, String email, String phone, String birthDate, String cpf) {
+		this.setUsername(username);
 		this.setPassword(password);
 		this.setEmail(email);
 		this.setPhone(phone);
 		this.birthDate = birthDate;
 		this.cpf = cpf;
-//		this.getRole().add(Role.CLIENT);
 	}
 
 	public Client() {}
